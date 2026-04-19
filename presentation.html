@@ -293,6 +293,112 @@ table.pt tr:hover td { background: rgba(200,169,81,0.035); }
 /* ── HR ACCENT ───────────────────────────────────────── */
 .hr-gold { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); border: 0; }
 .hr-left { height: 1px; background: linear-gradient(to right, var(--gold), transparent); border: 0; }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — всё до 768px
+══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Слайды: убираем fixed-height, разрешаем скролл */
+  .slide {
+    padding: 48px 20px 80px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Скрываем декоративные колонки на мобиле */
+  .td { display: none; }
+
+  /* Заголовки */
+  h2.st { font-size: clamp(22px, 6vw, 32px); }
+  .slide-label { font-size: 10px; letter-spacing: 0.22em; }
+
+  /* Все двух- трёх- четырёхколоночные сетки → 1 колонка */
+  .g2, .g3, .g4, .g-offset,
+  .method-grid, .service-grid,
+  .risk-grid, .comparison,
+  .two-col { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* Сравнение: убираем визуальное разделение */
+  .comp-col.new { border-left: 3px solid var(--gold); }
+
+  /* Огромная цифра поменьше */
+  .stat-huge { font-size: clamp(64px, 18vw, 100px); }
+
+  /* Карточки */
+  .card { padding: 16px 16px; }
+
+  /* Таблица партнёров: скролл по горизонтали */
+  .pt { font-size: 12px; }
+  .pt th, .pt td { padding: 8px 10px; }
+
+  /* Таймлайн → вертикальный */
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .timeline::before { display: none; }
+  .timeline-item { flex-direction: row; align-items: flex-start; gap: 16px; text-align: left; }
+  .timeline-year { flex-shrink: 0; margin-bottom: 0; width: 48px; height: 48px; font-size: 16px; }
+  .timeline-title { font-size: 15px; margin-bottom: 6px; }
+
+  /* VS-ряд → колонка */
+  .vs-row { flex-direction: column; align-items: stretch; }
+  .vs-item { max-width: 100%; }
+
+  /* Funding bars */
+  .funding-items { margin-top: 12px; }
+
+  /* Blockquote */
+  blockquote.pull { font-size: clamp(15px, 4vw, 19px); padding-left: 18px; }
+
+  /* Навигация */
+  .nav { padding: 10px 16px 14px; }
+  .nav-btn { padding: 8px 14px; font-size: 11px; }
+  .slide-counter { font-size: 12px; }
+  .slide-counter .cur { font-size: 16px; }
+
+  /* Титульный слайд */
+  .slide.title-slide { padding: 48px 24px 90px; justify-content: center; }
+  .title-slide h1 { font-size: clamp(30px, 8vw, 46px); }
+  .title-slide .subtitle { font-size: clamp(14px, 4vw, 20px); margin-bottom: 24px; }
+  .title-slide .mission-text { font-size: 14px; }
+  .title-slide .org-name { font-size: 10px; letter-spacing: 0.25em; }
+
+  /* Финальный слайд */
+  .closing .big-q { font-size: clamp(16px, 5vw, 22px); }
+  .partner-badge { flex-direction: column; gap: 6px; text-align: center; font-size: 13px; padding: 12px 16px; }
+
+  /* Оргсхема: уменьшаем узлы */
+  .cb [style*="padding:12px 52px"] { padding: 10px 24px !important; font-size: 15px !important; }
+  .cb [style*="padding:10px 40px"] { padding: 10px 18px !important; font-size: 14px !important; }
+
+  /* Chips */
+  .chip { font-size: 12px; padding: 4px 10px; }
+
+  /* Elegant list */
+  .el li { font-size: 14px; }
+
+  /* Service items */
+  .service-item { font-size: 13px; }
+
+  /* Method items */
+  .method-name { font-size: 13px; }
+  .method-result { font-size: 11px; }
+
+  /* Risk items */
+  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .risk-name { font-size: 13px; }
+  .risk-solution { font-size: 11px; }
+}
+
+/* Очень маленькие экраны (до 400px) */
+@media (max-width: 400px) {
+  .slide { padding: 44px 16px 76px; }
+  .risk-grid { grid-template-columns: 1fr !important; }
+  h2.st { font-size: 20px; }
+}
 </style>
 </head>
 <body>
