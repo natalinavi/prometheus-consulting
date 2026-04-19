@@ -1,0 +1,87 @@
+:root {
+  /* === ОСНОВНЫЕ ЦВЕТА === */
+  --color-primary:      #2563EB;
+  --color-primary-dark: #1D4ED8;
+  --color-primary-deep: #1E3A8A;
+
+  --color-secondary:    #0D9488;
+  --color-secondary-dk: #0F766E;
+
+  --color-accent:       #F97316;
+  --color-accent-dark:  #EA6C0A;
+
+  /* === ФОНЫ === */
+  --color-bg:           #F8FAFC;
+  --color-bg-warm:      #FFF7ED;
+  --color-bg-dark:      #1E3A8A;
+  --color-surface:      #FFFFFF;
+
+  /* === ТЕКСТ === */
+  --color-text:         #1E293B;
+  --color-text-muted:   #64748B;
+  --color-text-light:   #94A3B8;
+  --color-border:       #E2E8F0;
+
+  /* === ЦВЕТА КАРТОЧЕК УСЛУГ === */
+  --card-psych:         #7C3AED;
+  --card-correction:    #2563EB;
+  --card-career:        #0D9488;
+  --card-family:        #F97316;
+  --card-legal:         #1D4ED8;
+  --card-training:      #059669;
+  --card-social:        #7C3AED;
+  --card-deviant:       #DC2626;
+
+  /* === ТЕНИ === */
+  --shadow-xs:          0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-sm:          0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md:          0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg:          0 8px 30px rgba(0, 0, 0, 0.10);
+  --shadow-xl:          0 16px 48px rgba(0, 0, 0, 0.14);
+
+  --shadow-blue:        0 4px 14px rgba(37, 99, 235, 0.30);
+  --shadow-blue-lg:     0 8px 24px rgba(37, 99, 235, 0.40);
+  --shadow-orange:      0 4px 14px rgba(249, 115, 22, 0.30);
+  --shadow-orange-lg:   0 8px 24px rgba(249, 115, 22, 0.45);
+  --shadow-teal:        0 4px 14px rgba(13, 148, 136, 0.25);
+
+  /* === ТИПОГРАФИКА === */
+  --font-heading:       'Raleway', sans-serif;
+  --font-body:          'Inter', sans-serif;
+
+  --text-xs:            12px;
+  --text-sm:            14px;
+  --text-base:          17px;
+  --text-lg:            20px;
+  --text-xl:            24px;
+  --text-2xl:           32px;
+  --text-3xl:           40px;
+  --text-4xl:           52px;
+  --text-5xl:           64px;
+
+  /* === ОТСТУПЫ === */
+  --section-py:         100px;
+  --container-px:       24px;
+  --container-max:      1200px;
+
+  /* === РАДИУСЫ === */
+  --radius-sm:          8px;
+  --radius-md:          12px;
+  --radius-lg:          16px;
+  --radius-xl:          24px;
+  --radius-full:        9999px;
+
+  /* === ПЕРЕХОДЫ === */
+  --transition-fast:    0.15s ease;
+  --transition-base:    0.2s ease;
+  --transition-slow:    0.35s ease;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-py:       64px;
+    --text-4xl:         36px;
+    --text-3xl:         28px;
+    --text-2xl:         24px;
+  }
+}
