@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Логотип — АНО «Прометей Консалтинг»</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #2563EB;
+      --teal:    #0D9488;
+      --orange:  #F97316;
+      --dark:    #1E293B;
+      --muted:   #64748B;
+      --border:  #E2E8F0;
+      --bg:      #F8FAFC;
+      --surface: #FFFFFF;
+      --bg-dark: #0e0e2a;
+      --lime:    #c9f000;
+    }
+
+    html { font-family: 'Raleway', sans-serif; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--dark); min-height: 100vh; }
+
+    /* ── PAGE HEADER ─────────────────────────── */
+    .page-header {
+      padding: 56px 80px 44px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      background: var(--surface);
+    }
+    .ph-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .ph-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .ph-meta {
+      text-align: right;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── NAV ──────────────────────────────────── */
+    .page-nav {
+      display: flex;
+      gap: 0;
+      padding: 0 80px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-item {
+      padding: 16px 0;
+      margin-right: 36px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+    /* ── SECTIONS ─────────────────────────────── */
+    .section {
+      padding: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 56px;
+    }
+
+    /* ── LOGO GRID ────────────────────────────── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .logo-card {
+      border-radius: 24px;
+      padding: 56px 52px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    .logo-card.on-light {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    }
+    .logo-card.on-dark { background: var(--bg-dark); }
+    .logo-card.on-grey { background: #CBD5E1; }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .on-light .card-tag, .on-grey .card-tag { color: var(--muted); }
+    .on-dark .card-tag  { color: rgba(255,255,255,0.3); }
+
+    /* ── ICON SIZE SHOWCASE ───────────────────── */
+    .icon-row {
+      display: flex;
+      gap: 40px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .icon-sz {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+    .icon-dark-bg {
+      background: var(--bg-dark);
+      padding: 20px 18px;
+      border-radius: 16px;
+    }
+
+    /* ── PALETTE ──────────────────────────────── */
+    .palette-grid {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .swatch {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .chip-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .chip-hex  { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; font-weight: 500; }
+
+    /* ── RATIONALE ────────────────────────────── */
+    .rationale {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .rat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px 28px;
+    }
+    .rat-num {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--blue);
+      opacity: 0.12;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .rat-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .rat-text  { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* ── COPY BUTTON ──────────────────────────── */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+    }
+    .copy-btn:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,99,235,0.38); }
+    .copy-btn.ok    { background: var(--teal); box-shadow: 0 4px 14px rgba(13,148,136,0.35); }
+
+    /* ── CODE BLOCK ───────────────────────────── */
+    .code-wrap {
+      background: #0f172a;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 32px;
+    }
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .code-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.12em;
+    }
+    .code-block {
+      padding: 28px 32px;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 12px;
+      color: #7dd3fc;
+      line-height: 1.7;
+      white-space: pre;
+    }
+
+    /* ── FLAME ANIMATION ──────────────────────── */
+    @keyframes breathe {
+      0%,100% { transform: scaleY(1)   scaleX(1);    }
+      30%      { transform: scaleY(1.025) scaleX(0.985); }
+      60%      { transform: scaleY(0.975) scaleX(1.01);  }
+    }
+    .live { transform-origin: 50% 100%; animation: breathe 4s ease-in-out infinite; }
+
+    /* ── USAGE EXAMPLES ───────────────────────── */
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .usage-card {
+      border-radius: 20px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .usage-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────────── PAGE HEADER ─────────────── -->
+<header class="page-header">
+  <div>
+    <p class="ph-eyebrow">Фирменный стиль · Версия 1.0</p>
+    <h1 class="ph-title">АНО «Прометей Консалтинг»<br>Логотип и знак</h1>
+  </div>
+  <div class="ph-meta">
+    Санкт-Петербург<br>Апрель 2026
+  </div>
+</header>
+
+<!-- ─────────────── NAV ─────────────── -->
+<nav class="page-nav">
+  <a href="#horizontal" class="nav-item">Горизонтальный</a>
+  <a href="#icon"       class="nav-item">Знак</a>
+  <a href="#usage"      class="nav-item">Применение</a>
+  <a href="#palette"    class="nav-item">Цвета</a>
+  <a href="#concept"    class="nav-item">Концепция</a>
+  <a href="#export"     class="nav-item">Экспорт</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════
+     01  ГОРИЗОНТАЛЬНЫЙ ЛОГОТИП
+════════════════════════════════════════════ -->
+<section class="section" id="horizontal">
+  <p class="section-num">01</p>
+  <h2 class="section-title">Горизонтальный логотип</h2>
+
+  <div class="logo-grid">
+
+    <!-- СВЕТЛЫЙ -->
+    <div class="logo-card on-light">
+      <span class="card-tag">Светлый · лендинг, документы, печать</span>
+
+      <svg id="logo-h-light" width="300" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fl-hl" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <!-- ПЛАМЯ -->
+        <g class="live">
+          <!-- левый язык -->
+          <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+          <!-- центральный (самый высокий) -->
+          <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl-hl)"/>
+          <!-- правый язык -->
+          <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+          <!-- основание-тень -->
+          <ellipse cx="24" cy="59" rx="14" ry="2.5" fill="#1E293B" opacity="0.06"/>
+        </g>
+        <!-- разделитель -->
+        <line x1="58" y1="16" x2="58" y2="58" stroke="#E2E8F0" stroke-width="1"/>
+        <!-- АНО -->
+        <text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="#94A3B8" letter-spacing="3">АНО</text>
+        <!-- ПРОМЕТЕЙ -->
+        <text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#1E293B" letter-spacing="-0.5">ПРОМЕТЕЙ</text>
+        <!-- КОНСАЛТИНГ -->
+        <text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="#64748B" letter-spacing="3.2">КОНСАЛТИНГ</text>
+      </svg>
+
+      <button class="copy-btn" onclick="copySVG('logo-h-light', this)">
+        Скопировать SVG
+      </button>
+    </div>
+
+    <!-- ТЁМНЫЙ -->
+    <div class="logo-card on-dark">
+      <span class="card-tag">Тёмный · презентации, соцсети</span>
+
+      <svg id="logo-h-dark" width="300" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fl-hd" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#c9f000"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+          <filter id="glow-h">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g class="live" filter="url(#glow-h)">
+          <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.88"/>
+          <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl-hd)"/>
+          <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#c9f000" opacity="0.82"/>
+        </g>
+        <line x1="58" y1="16" x2="58" y2="58" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="rgba(255,255,255,0.3)" letter-spacing="3">АНО</text>
+        <text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#FFFFFF" letter-spacing="-0.5">ПРОМЕТЕЙ</text>
+        <text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="rgba(255,255,255,0.4)" letter-spacing="3.2">КОНСАЛТИНГ</text>
+      </svg>
+
+      <button class="copy-btn" onclick="copySVG('logo-h-dark', this)">
+        Скопировать SVG
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     02  ЗНАК — МАСШТАБИРОВАНИЕ
+════════════════════════════════════════════ -->
+<section class="section" id="icon">
+  <p class="section-num">02</p>
+  <h2 class="section-title">Знак — масштабирование</h2>
+
+  <div class="icon-row">
+
+    <!-- 160px — светлый -->
+    <div class="icon-item">
+      <svg width="80" height="97" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fi-a" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <g class="live">
+          <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+          <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fi-a)"/>
+          <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+          <ellipse cx="24" cy="59" rx="14" ry="2.2" fill="#1E293B" opacity="0.07"/>
+        </g>
+      </svg>
+      <span class="icon-sz">80px</span>
+    </div>
+
+    <!-- 48px -->
+    <div class="icon-item">
+      <svg width="48" height="58" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fi-b" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+        <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fi-b)"/>
+        <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+      </svg>
+      <span class="icon-sz">48px</span>
+    </div>
+
+    <!-- 32px -->
+    <div class="icon-item">
+      <svg width="32" height="39" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fi-c" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+        <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fi-c)"/>
+        <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+      </svg>
+      <span class="icon-sz">32px</span>
+    </div>
+
+    <!-- 20px — favicon -->
+    <div class="icon-item">
+      <svg width="20" height="24" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fi-d" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+        <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fi-d)"/>
+        <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+      </svg>
+      <span class="icon-sz">20px · favicon</span>
+    </div>
+
+    <!-- тёмный фон -->
+    <div class="icon-item icon-dark-bg">
+      <svg width="56" height="68" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fi-e" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#c9f000"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+          <filter id="gw">
+            <feGaussianBlur stdDeviation="2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#gw)">
+          <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.9"/>
+          <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fi-e)"/>
+          <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#c9f000" opacity="0.85"/>
+        </g>
+      </svg>
+      <span class="icon-sz" style="color:rgba(255,255,255,0.3)">тёмный фон</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     03  ПРИМЕНЕНИЕ
+════════════════════════════════════════════ -->
+<section class="section" id="usage">
+  <p class="section-num">03</p>
+  <h2 class="section-title">Применение</h2>
+
+  <div class="usage-grid">
+
+    <!-- ЛЕНДИНГ HEADER -->
+    <div class="usage-card on-light" style="background:#fff;border:1px solid var(--border);border-radius:20px;">
+      <svg width="200" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fu-a" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+        <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fu-a)"/>
+        <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+        <line x1="58" y1="16" x2="58" y2="58" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="#94A3B8" letter-spacing="3">АНО</text>
+        <text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#1E293B" letter-spacing="-0.5">ПРОМЕТЕЙ</text>
+        <text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="#64748B" letter-spacing="3.2">КОНСАЛТИНГ</text>
+      </svg>
+      <span class="usage-label">Шапка сайта · светлая</span>
+    </div>
+
+    <!-- ПРЕЗЕНТАЦИЯ -->
+    <div class="usage-card" style="background:radial-gradient(ellipse at 75% 25%, #341b72 0%, #0e0e2a 65%);border-radius:20px;">
+      <svg width="200" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fu-b" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#c9f000"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+          <filter id="gfw">
+            <feGaussianBlur stdDeviation="2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#gfw)">
+          <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.88"/>
+          <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fu-b)"/>
+          <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#c9f000" opacity="0.82"/>
+        </g>
+        <line x1="58" y1="16" x2="58" y2="58" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="rgba(255,255,255,0.3)" letter-spacing="3">АНО</text>
+        <text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#FFFFFF" letter-spacing="-0.5">ПРОМЕТЕЙ</text>
+        <text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="rgba(255,255,255,0.4)" letter-spacing="3.2">КОНСАЛТИНГ</text>
+      </svg>
+      <span class="usage-label" style="color:rgba(255,255,255,0.3)">Слайд презентации</span>
+    </div>
+
+    <!-- СЕРЫЙ ФОН -->
+    <div class="usage-card" style="background:#E2E8F0;border-radius:20px;">
+      <svg width="200" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fu-c" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#F97316"/>
+            <stop offset="52%"  stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#0D9488"/>
+          </linearGradient>
+        </defs>
+        <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/>
+        <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fu-c)"/>
+        <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/>
+        <line x1="58" y1="16" x2="58" y2="58" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+        <text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="#94A3B8" letter-spacing="3">АНО</text>
+        <text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#1E293B" letter-spacing="-0.5">ПРОМЕТЕЙ</text>
+        <text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="#64748B" letter-spacing="3.2">КОНСАЛТИНГ</text>
+      </svg>
+      <span class="usage-label">Нейтральный / серый фон</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     04  ЦВЕТА
+════════════════════════════════════════════ -->
+<section class="section" id="palette">
+  <p class="section-num">04</p>
+  <h2 class="section-title">Цветовая палитра</h2>
+
+  <div class="palette-grid">
+    <div class="chip">
+      <div class="swatch" style="background:#F97316;"></div>
+      <div>
+        <div class="chip-name">Огонь · Тепло</div>
+        <div class="chip-hex">#F97316</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="swatch" style="background:#2563EB;"></div>
+      <div>
+        <div class="chip-name">Доверие · Знание</div>
+        <div class="chip-hex">#2563EB</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="swatch" style="background:#0D9488;"></div>
+      <div>
+        <div class="chip-name">Спокойствие · Рост</div>
+        <div class="chip-hex">#0D9488</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="swatch" style="background:#0e0e2a;border:1px solid #ddd;"></div>
+      <div>
+        <div class="chip-name">Ночь (тёмный фон)</div>
+        <div class="chip-hex">#0e0e2a</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="swatch" style="background:#c9f000;"></div>
+      <div>
+        <div class="chip-name">Акцент на тёмном</div>
+        <div class="chip-hex">#c9f000</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="swatch" style="background:#1E293B;"></div>
+      <div>
+        <div class="chip-name">Основной текст</div>
+        <div class="chip-hex">#1E293B</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     05  КОНЦЕПЦИЯ
+════════════════════════════════════════════ -->
+<section class="section" id="concept">
+  <p class="section-num">05</p>
+  <h2 class="section-title">Концепция знака</h2>
+
+  <div class="rationale">
+    <div class="rat-card">
+      <div class="rat-num">01</div>
+      <div class="rat-title">Тройное пламя</div>
+      <div class="rat-text">Три языка огня — три измерения помощи: <strong>тепло</strong> первого контакта, <strong>знание</strong> как инструмент, <strong>рост</strong> как результат. Центральный язык — выше остальных: это стержень миссии организации.</div>
+    </div>
+    <div class="rat-card">
+      <div class="rat-num">02</div>
+      <div class="rat-title">Градиент трансформации</div>
+      <div class="rat-text">Переход оранжевый → синий → teal отражает путь клиента: от кризиса (тепло поддержки) через профессиональную помощь (доверие) к новому состоянию (спокойствие). Не рекламный — живой.</div>
+    </div>
+    <div class="rat-card">
+      <div class="rat-num">03</div>
+      <div class="rat-title">Прометей без мифологии</div>
+      <div class="rat-text">Знак не буквальный факел — это абстракция огня как метафоры. Узнаваем на любом фоне, масштабируется от 16px (favicon) до 300px без потери характера.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     06  ЭКСПОРТ SVG
+════════════════════════════════════════════ -->
+<section class="section" id="export">
+  <p class="section-num">06</p>
+  <h2 class="section-title">SVG-код для экспорта</h2>
+
+  <!-- ТОЛЬКО ЗНАК -->
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-label">ЗНАК (только символ) — светлый</span>
+      <button class="copy-btn" style="font-size:12px;padding:8px 16px;" onclick="copyCode('code-icon', this)">Скопировать</button>
+    </div>
+    <div class="code-block">
+      <pre id="code-icon">&lt;svg width="48" height="58" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="fl" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse"&gt;
+      &lt;stop offset="0%"   stop-color="#F97316"/&gt;
+      &lt;stop offset="52%"  stop-color="#2563EB"/&gt;
+      &lt;stop offset="100%" stop-color="#0D9488"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/&gt;
+  &lt;path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl)"/&gt;
+  &lt;path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/&gt;
+&lt;/svg&gt;</pre>
+    </div>
+  </div>
+
+  <!-- ГОРИЗОНТАЛЬНЫЙ СВЕТЛЫЙ -->
+  <div class="code-wrap" style="margin-top:20px;">
+    <div class="code-header">
+      <span class="code-label">ГОРИЗОНТАЛЬНЫЙ логотип — светлый (300×68px)</span>
+      <button class="copy-btn" style="font-size:12px;padding:8px 16px;" onclick="copyCode('code-logo-light', this)">Скопировать</button>
+    </div>
+    <div class="code-block">
+      <pre id="code-logo-light">&lt;svg width="300" height="68" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="fl" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse"&gt;
+      &lt;stop offset="0%"   stop-color="#F97316"/&gt;
+      &lt;stop offset="52%"  stop-color="#2563EB"/&gt;
+      &lt;stop offset="100%" stop-color="#0D9488"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;!-- символ --&gt;
+  &lt;path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.72"/&gt;
+  &lt;path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl)"/&gt;
+  &lt;path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#0D9488" opacity="0.72"/&gt;
+  &lt;!-- разделитель --&gt;
+  &lt;line x1="58" y1="16" x2="58" y2="58" stroke="#E2E8F0" stroke-width="1"/&gt;
+  &lt;!-- текст --&gt;
+  &lt;text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="#94A3B8" letter-spacing="3"&gt;АНО&lt;/text&gt;
+  &lt;text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#1E293B" letter-spacing="-0.5"&gt;ПРОМЕТЕЙ&lt;/text&gt;
+  &lt;text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="#64748B" letter-spacing="3.2"&gt;КОНСАЛТИНГ&lt;/text&gt;
+&lt;/svg&gt;</pre>
+    </div>
+  </div>
+
+  <!-- ГОРИЗОНТАЛЬНЫЙ ТЁМНЫЙ -->
+  <div class="code-wrap" style="margin-top:20px;">
+    <div class="code-header">
+      <span class="code-label">ГОРИЗОНТАЛЬНЫЙ логотип — тёмный (для презентаций)</span>
+      <button class="copy-btn" style="font-size:12px;padding:8px 16px;" onclick="copyCode('code-logo-dark', this)">Скопировать</button>
+    </div>
+    <div class="code-block">
+      <pre id="code-logo-dark">&lt;svg width="300" height="68" viewBox="0 0 300 68" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="fl" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse"&gt;
+      &lt;stop offset="0%"   stop-color="#F97316"/&gt;
+      &lt;stop offset="52%"  stop-color="#c9f000"/&gt;
+      &lt;stop offset="100%" stop-color="#0D9488"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;filter id="glow"&gt;
+      &lt;feGaussianBlur stdDeviation="2.5" result="b"/&gt;
+      &lt;feMerge&gt;&lt;feMergeNode in="b"/&gt;&lt;feMergeNode in="SourceGraphic"/&gt;&lt;/feMerge&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;!-- символ с эффектом свечения --&gt;
+  &lt;g filter="url(#glow)"&gt;
+    &lt;path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.88"/&gt;
+    &lt;path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl)"/&gt;
+    &lt;path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#c9f000" opacity="0.82"/&gt;
+  &lt;/g&gt;
+  &lt;line x1="58" y1="16" x2="58" y2="58" stroke="rgba(255,255,255,0.1)" stroke-width="1"/&gt;
+  &lt;text x="70" y="20" font-family="Raleway,sans-serif" font-weight="600" font-size="10" fill="rgba(255,255,255,0.3)" letter-spacing="3"&gt;АНО&lt;/text&gt;
+  &lt;text x="68" y="42" font-family="Raleway,sans-serif" font-weight="800" font-size="23" fill="#FFFFFF" letter-spacing="-0.5"&gt;ПРОМЕТЕЙ&lt;/text&gt;
+  &lt;text x="70" y="58" font-family="Raleway,sans-serif" font-weight="500" font-size="11.5" fill="rgba(255,255,255,0.4)" letter-spacing="3.2"&gt;КОНСАЛТИНГ&lt;/text&gt;
+&lt;/svg&gt;</pre>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+  function copySVG(id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(new XMLSerializer().serializeToString(el)).then(() => {
+      btn.textContent = 'Скопировано ✓';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = 'Скопировать SVG'; btn.classList.remove('ok'); }, 2000);
+    });
+  }
+
+  function copyCode(id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent).then(() => {
+      btn.textContent = 'Скопировано ✓';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = 'Скопировать'; btn.classList.remove('ok'); }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>

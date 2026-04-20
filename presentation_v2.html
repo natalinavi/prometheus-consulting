@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЦСК — АНО «Прометей Консалтинг» · 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #07101e;
+  --bg-alt:     #0c1828;
+  --gold:       #c8a951;
+  --gold-light: #e2c97a;
+  --gold-dim:   rgba(200, 169, 81, 0.22);
+  --gold-glow:  rgba(200, 169, 81, 0.08);
+  --purple:       #6b3fa0;
+  --purple-light: #9b6fd4;
+  --purple-dim:   rgba(107, 63, 160, 0.20);
+  --purple-glow:  rgba(107, 63, 160, 0.10);
+  --white:      #f0ebe0;
+  --grey:       #8da4bc;
+  --grey-dim:   rgba(141, 164, 188, 0.25);
+  --card-bg:    rgba(255,255,255,0.032);
+  --card-border:rgba(200, 169, 81, 0.16);
+  --font-d: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+  --font-b: 'Optima', 'Candara', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--font-b);
+  color: var(--white);
+}
+
+/* ── AMBIENT BACKGROUND ─────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 159px,
+      rgba(200,169,81,0.022) 159px, rgba(200,169,81,0.022) 160px),
+    radial-gradient(ellipse at 88% 12%, rgba(200,169,81,0.09) 0%, transparent 45%),
+    radial-gradient(ellipse at 12% 88%, rgba(107,63,160,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 72% 78%, rgba(107,63,160,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 50%, rgba(12,24,50,0.3) 0%, transparent 70%);
+}
+
+/* ── PROGRESS BAR ────────────────────────────────────── */
+#progressBar {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 200;
+  background: linear-gradient(to right, var(--gold), var(--gold-light));
+  box-shadow: 0 0 14px rgba(200,169,81,0.55);
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── SLIDE SYSTEM ────────────────────────────────────── */
+.presentation { position: fixed; inset: 0; z-index: 1; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 56px 80px 80px;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: all; }
+
+/* ── NAVIGATION ──────────────────────────────────────── */
+.nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 44px 18px;
+  background: linear-gradient(to top, rgba(7,16,30,0.97) 0%, transparent 100%);
+}
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--gold);
+  font-family: var(--font-b);
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 8px 22px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.22s;
+}
+.nav-btn:hover { background: var(--gold-glow); border-color: var(--gold); }
+.nav-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.slide-counter {
+  font-family: var(--font-d);
+  font-size: 13px; color: var(--grey); letter-spacing: 0.08em;
+}
+.slide-counter .cur { color: var(--gold); font-size: 18px; }
+
+/* ── DECORATORS ──────────────────────────────────────── */
+.deco-line {
+  display: block; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 14px 0;
+}
+.deco-label {
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); font-family: var(--font-b); margin-bottom: 10px;
+}
+.diamond { display: inline-block; width: 6px; height: 6px;
+  background: var(--gold); transform: rotate(45deg); margin: 0 10px; }
+
+/* ── TYPOGRAPHY ──────────────────────────────────────── */
+.slide-label {
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+h2.st {
+  font-family: var(--font-d); font-size: clamp(26px,3.4vw,44px);
+  font-weight: normal; color: var(--white); line-height: 1.12;
+}
+h2.st strong { color: var(--gold-light); }
+.lead { font-size: 17px; line-height: 1.72; color: var(--grey); max-width: 680px; }
+.lead strong { color: var(--white); }
+
+/* ── LAYOUT HELPERS ──────────────────────────────────── */
+.cb { width: 100%; max-width: 1120px; margin: 0 auto; }
+
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: 100%; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; width: 100%; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; width: 100%; }
+.g-offset { display: grid; grid-template-columns: 2fr 3fr; gap: 44px; width: 100%; }
+
+/* ── CARD ────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 20px 22px;
+}
+.card-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.card-title { font-family: var(--font-d); font-size: 17px; color: var(--white); margin-bottom: 7px; line-height: 1.3; }
+.card-body { font-size: 13px; color: var(--grey); line-height: 1.6; }
+
+/* ── ELEGANT LIST ────────────────────────────────────── */
+.el { list-style: none; padding: 0; }
+.el li {
+  display: flex; align-items: flex-start; gap: 13px;
+  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.042);
+  font-size: 15px; color: var(--grey); line-height: 1.55;
+}
+.el li:last-child { border-bottom: none; }
+.el li::before { content: '◆'; color: var(--gold); font-size: 8px; margin-top: 5px; flex-shrink: 0; }
+.el li strong { color: var(--white); }
+
+/* ── STAT ────────────────────────────────────────────── */
+.stat-huge {
+  font-family: var(--font-d); font-size: clamp(80px,12vw,136px);
+  color: var(--gold); line-height: 1; font-weight: normal; opacity: 0.82;
+}
+
+/* ── COMPARISON ──────────────────────────────────────── */
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 0; width: 100%; margin-top: 22px; }
+.comp-col { padding: 24px 28px; }
+.comp-col.old { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.07); opacity: 0.72; }
+.comp-col.new { background: rgba(200,169,81,0.045); border: 1px solid var(--gold-dim); border-left: 3px solid var(--gold); }
+.comp-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 14px; }
+.comp-col.old .comp-label { color: var(--grey); }
+.comp-col.new .comp-label { color: var(--gold); }
+.comp-list { list-style: none; font-size: 15px; line-height: 1.85; }
+.comp-col.old .comp-list li::before { content: '✗  '; color: #c04040; font-size: 11px; }
+.comp-col.new .comp-list li::before { content: '◆  '; color: var(--gold); font-size: 9px; }
+.comp-col.old .comp-list { color: #7a8a9a; }
+.comp-col.new .comp-list { color: var(--grey); }
+.comp-col.new .comp-list li strong { color: var(--white); }
+
+/* ── BLOCKQUOTE ──────────────────────────────────────── */
+blockquote.pull {
+  border-left: 3px solid var(--gold);
+  padding: 14px 0 14px 26px;
+  margin: 20px 0;
+  font-family: var(--font-d); font-size: clamp(17px,2.1vw,24px);
+  font-style: italic; color: var(--white); line-height: 1.5;
+  max-width: 740px;
+}
+
+/* ── TABLE ───────────────────────────────────────────── */
+table.pt { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; }
+table.pt th {
+  text-align: left; padding: 9px 16px;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); border-bottom: 1px solid var(--gold-dim);
+  font-weight: normal; font-family: var(--font-b);
+}
+table.pt td {
+  padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.038);
+  color: var(--grey); vertical-align: top; line-height: 1.5;
+}
+table.pt td:first-child { color: var(--white); font-size: 15px; }
+table.pt td:last-child { color: rgba(200,169,81,0.65); font-size: 13px; }
+table.pt tr:hover td { background: rgba(200,169,81,0.035); }
+
+/* ── METHOD GRID ─────────────────────────────────────── */
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 14px; }
+.method-item { display: flex; gap: 13px; padding: 13px 15px;
+  background: var(--card-bg); border: 1px solid var(--card-border); align-items: flex-start; }
+.method-num { font-family: var(--font-d); font-size: 22px; color: var(--gold);
+  opacity: 0.38; line-height: 1; flex-shrink: 0; min-width: 26px; }
+.method-name { font-size: 14px; color: var(--white); margin-bottom: 3px; font-weight: 500; }
+.method-result { font-size: 12px; color: var(--grey); line-height: 1.4; }
+
+/* ── SERVICE GRID ────────────────────────────────────── */
+.service-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; width: 100%; margin-top: 14px; }
+.service-item {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 12px 14px; font-size: 13px; color: var(--grey);
+  display: flex; align-items: center; gap: 10px;
+}
+.service-item::before { content: ''; display: block; width: 4px; height: 4px;
+  background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+
+/* ── FUNDING BARS ────────────────────────────────────── */
+.funding-items { display: flex; flex-direction: column; gap: 14px; width: 100%; margin-top: 18px; }
+.funding-item { display: flex; flex-direction: column; gap: 6px; }
+.funding-label { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+.funding-name { color: var(--white); }
+.funding-tag { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); background: var(--gold-glow); border: 1px solid var(--gold-dim); padding: 2px 8px; }
+.funding-bar { height: 2px; background: rgba(255,255,255,0.06); }
+.funding-bar-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--gold-light)); }
+
+/* ── RISK GRID ───────────────────────────────────────── */
+.risk-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; width: 100%; margin-top: 18px; }
+.risk-item { background: var(--card-bg); border: 1px solid var(--card-border); padding: 16px 18px; }
+.risk-type { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.risk-name { font-family: var(--font-d); font-size: 15px; color: var(--white); margin-bottom: 7px; }
+.risk-solution { font-size: 12px; color: var(--grey); line-height: 1.55; }
+
+/* ── TIMELINE ────────────────────────────────────────── */
+.timeline { display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 0; width: 100%; margin-top: 28px; position: relative; }
+.timeline::before { content: ''; position: absolute; top: 31px; left: 10%; right: 10%;
+  height: 1px; background: linear-gradient(to right, var(--gold-dim), var(--gold), var(--gold-dim)); }
+.timeline-item { display: flex; flex-direction: column; align-items: center; padding: 0 18px; text-align: center; }
+.timeline-year { width: 62px; height: 62px; border: 2px solid var(--gold); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-d); font-size: 18px; color: var(--gold);
+  background: var(--bg); position: relative; z-index: 1; margin-bottom: 14px; }
+.timeline-title { font-family: var(--font-d); font-size: 16px; color: var(--white); margin-bottom: 10px; }
+.timeline-items { list-style: none; font-size: 13px; color: var(--grey); text-align: left; line-height: 1.75; }
+.timeline-items li::before { content: '— '; color: var(--gold); }
+
+/* ── VS ROW ──────────────────────────────────────────── */
+.vs-row { display: flex; gap: 14px; margin-top: 22px; justify-content: center; }
+.vs-item { flex: 1; max-width: 300px; background: var(--card-bg);
+  border: 1px solid var(--card-border); padding: 16px 18px; text-align: left; }
+.vs-item.us { border-color: var(--gold); background: rgba(200,169,81,0.052); }
+.vs-item-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); margin-bottom: 7px; }
+.vs-item.us .vs-item-label { color: var(--gold); }
+.vs-item-name { font-family: var(--font-d); font-size: 15px; color: var(--white); margin-bottom: 6px; }
+.vs-item-weak { font-size: 12px; color: rgba(255,100,100,0.55); line-height: 1.45; }
+.vs-item.us .vs-item-weak { color: var(--gold); font-size: 13px; }
+
+/* ── TITLE SLIDE ─────────────────────────────────────── */
+.slide.title-slide {
+  justify-content: center; align-items: center; text-align: center; padding: 60px;
+}
+.td { position: absolute; top: 0; bottom: 0; width: 56px;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 40px 0; }
+.td.l { left: 28px; align-items: flex-start; }
+.td.r { right: 28px; align-items: flex-end; }
+.td-line { width: 1px; flex: 1; background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent); margin: 0 auto; }
+.td-dot { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); opacity: 0.55; }
+
+.title-slide .title-logo { margin-bottom: 18px; }
+.title-slide .title-logo svg { filter: drop-shadow(0 0 18px rgba(200,100,20,0.45)) drop-shadow(0 0 8px rgba(107,63,160,0.3)); }
+.title-slide h1 { font-family: var(--font-d); font-size: clamp(34px,5vw,62px);
+  font-weight: normal; color: var(--white); line-height: 1.08; letter-spacing: 0.01em; margin-bottom: 10px; }
+.title-slide .title-project { font-family: var(--font-b); font-size: clamp(14px,1.8vw,20px);
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.title-slide .subtitle { font-family: var(--font-d); font-size: clamp(13px,1.6vw,18px);
+  color: var(--grey); font-weight: normal; font-style: italic; margin-bottom: 32px; }
+.title-slide .mission-block { max-width: 620px; margin: 0 auto 32px; }
+.title-slide .mission-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--grey); margin-bottom: 10px; }
+.title-slide .mission-text { font-size: clamp(13px,1.6vw,17px); color: var(--grey); line-height: 1.8; font-style: italic; }
+.title-slide .mission-text strong { color: var(--white); font-style: normal; }
+.title-slide .meta { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+.title-slide .meta strong { color: var(--gold); }
+
+/* ── CLOSING SLIDE ───────────────────────────────────── */
+.slide.closing { justify-content: center; align-items: center; text-align: center; padding: 60px; }
+.closing .big-q { font-family: var(--font-d); font-size: clamp(19px,2.6vw,32px);
+  font-style: italic; color: var(--white); max-width: 720px; line-height: 1.55; margin: 28px auto; }
+.partner-badge { display: inline-flex; align-items: center; gap: 12px;
+  border: 1px solid var(--card-border); padding: 11px 22px; margin-top: 18px;
+  font-size: 14px; color: var(--grey); }
+
+/* ── CHIP ────────────────────────────────────────────── */
+.chip { display: inline-block; padding: 5px 12px; border: 1px solid var(--card-border); font-size: 13px; color: var(--grey); }
+
+/* ── HR ACCENT ───────────────────────────────────────── */
+.hr-gold { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); border: 0; }
+.hr-left { height: 1px; background: linear-gradient(to right, var(--gold), transparent); border: 0; }
+
+/* ── INFO RISK GRID ──────────────────────────────────── */
+.info-risk-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+  width: 100%; margin-top: 16px;
+}
+.ir-item {
+  background: var(--card-bg);
+  border: 1px solid rgba(107,63,160,0.28);
+  border-top: 2px solid var(--purple-light);
+  padding: 14px 16px;
+}
+.ir-type {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--purple-light); margin-bottom: 5px;
+}
+.ir-name { font-family: var(--font-d); font-size: 14px; color: var(--white); margin-bottom: 7px; }
+.ir-fix { font-size: 11.5px; color: var(--grey); line-height: 1.5; }
+.ir-reco {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;
+  margin-top: 16px;
+}
+.ir-reco-item {
+  background: rgba(107,63,160,0.08);
+  border: 1px solid rgba(107,63,160,0.22);
+  padding: 10px 12px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.ir-reco-num {
+  font-family: var(--font-d); font-size: 18px; color: var(--purple-light);
+  opacity: 0.6; line-height: 1; flex-shrink: 0;
+}
+.ir-reco-text { font-size: 12px; color: var(--grey); line-height: 1.45; }
+
+/* ── PROMO GRID (PR/GR/Бренд) ───────────────────────── */
+.promo-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  width: 100%; margin-top: 16px;
+}
+.promo-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 18px 20px; position: relative; overflow: hidden;
+}
+.promo-item::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--gold-light));
+}
+.promo-item.purple-accent::before {
+  background: linear-gradient(to right, var(--purple), var(--purple-light));
+}
+.promo-tag {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px;
+}
+.promo-item.purple-accent .promo-tag { color: var(--purple-light); }
+.promo-title { font-family: var(--font-d); font-size: 16px; color: var(--white); margin-bottom: 10px; }
+.promo-list { list-style: none; font-size: 12.5px; color: var(--grey); line-height: 1.65; }
+.promo-list li::before { content: '◆  '; color: var(--gold); font-size: 7px; vertical-align: middle; }
+.promo-item.purple-accent .promo-list li::before { color: var(--purple-light); }
+.promo-kw {
+  display: inline-block; font-size: 10px; letter-spacing: 0.12em;
+  border: 1px solid var(--gold-dim); color: var(--gold);
+  padding: 2px 7px; margin: 6px 4px 0 0;
+}
+.promo-item.purple-accent .promo-kw { border-color: var(--purple-dim); color: var(--purple-light); }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — всё до 768px
+══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Слайды: убираем fixed-height, разрешаем скролл */
+  .slide {
+    padding: 48px 20px 80px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Скрываем декоративные колонки на мобиле */
+  .td { display: none; }
+
+  /* Заголовки */
+  h2.st { font-size: clamp(22px, 6vw, 32px); }
+  .slide-label { font-size: 10px; letter-spacing: 0.22em; }
+
+  /* Все двух- трёх- четырёхколоночные сетки → 1 колонка */
+  .g2, .g3, .g4, .g-offset,
+  .method-grid, .service-grid,
+  .risk-grid, .comparison,
+  .info-risk-grid, .ir-reco, .promo-grid,
+  .two-col { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* Сравнение: убираем визуальное разделение */
+  .comp-col.new { border-left: 3px solid var(--gold); }
+
+  /* Огромная цифра поменьше */
+  .stat-huge { font-size: clamp(64px, 18vw, 100px); }
+
+  /* Карточки */
+  .card { padding: 16px 16px; }
+
+  /* Таблица партнёров: скролл по горизонтали */
+  .pt { font-size: 12px; }
+  .pt th, .pt td { padding: 8px 10px; }
+
+  /* Таймлайн → вертикальный */
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .timeline::before { display: none; }
+  .timeline-item { flex-direction: row; align-items: flex-start; gap: 16px; text-align: left; }
+  .timeline-year { flex-shrink: 0; margin-bottom: 0; width: 48px; height: 48px; font-size: 16px; }
+  .timeline-title { font-size: 15px; margin-bottom: 6px; }
+
+  /* VS-ряд → колонка */
+  .vs-row { flex-direction: column; align-items: stretch; }
+  .vs-item { max-width: 100%; }
+
+  /* Funding bars */
+  .funding-items { margin-top: 12px; }
+
+  /* Blockquote */
+  blockquote.pull { font-size: clamp(15px, 4vw, 19px); padding-left: 18px; }
+
+  /* Навигация */
+  .nav { padding: 10px 16px 14px; }
+  .nav-btn { padding: 8px 14px; font-size: 11px; }
+  .slide-counter { font-size: 12px; }
+  .slide-counter .cur { font-size: 16px; }
+
+  /* Титульный слайд */
+  .slide.title-slide { padding: 48px 24px 90px; justify-content: center; }
+  .title-slide h1 { font-size: clamp(30px, 8vw, 46px); }
+  .title-slide .subtitle { font-size: clamp(14px, 4vw, 20px); margin-bottom: 24px; }
+  .title-slide .mission-text { font-size: 14px; }
+  .title-slide .org-name { font-size: 10px; letter-spacing: 0.25em; }
+
+  /* Финальный слайд */
+  .closing .big-q { font-size: clamp(16px, 5vw, 22px); }
+  .partner-badge { flex-direction: column; gap: 6px; text-align: center; font-size: 13px; padding: 12px 16px; }
+
+  /* Оргсхема: уменьшаем узлы */
+  .cb [style*="padding:12px 52px"] { padding: 10px 24px !important; font-size: 15px !important; }
+  .cb [style*="padding:10px 40px"] { padding: 10px 18px !important; font-size: 14px !important; }
+
+  /* Chips */
+  .chip { font-size: 12px; padding: 4px 10px; }
+
+  /* Elegant list */
+  .el li { font-size: 14px; }
+
+  /* Service items */
+  .service-item { font-size: 13px; }
+
+  /* Method items */
+  .method-name { font-size: 13px; }
+  .method-result { font-size: 11px; }
+
+  /* Risk items */
+  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .risk-name { font-size: 13px; }
+  .risk-solution { font-size: 11px; }
+}
+
+/* Очень маленькие экраны (до 400px) */
+@media (max-width: 400px) {
+  .slide { padding: 44px 16px 76px; }
+  .risk-grid { grid-template-columns: 1fr !important; }
+  h2.st { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<div class="presentation">
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 1 — ТИТУЛЬНЫЙ
+═══════════════════════════════════════════════════ -->
+<section class="slide title-slide active" id="s1">
+  <div class="td l"><div class="td-dot"></div><div class="td-line"></div><div class="td-dot"></div></div>
+  <div class="td r"><div class="td-dot"></div><div class="td-line"></div><div class="td-dot"></div></div>
+
+  <div class="title-logo">
+    <svg width="72" height="87" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fl-title" x1="2" y1="60" x2="46" y2="2" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#F97316"/>
+          <stop offset="52%"  stop-color="#c9f000"/>
+          <stop offset="100%" stop-color="#0D9488"/>
+        </linearGradient>
+      </defs>
+      <path d="M11 56 C4 52 2 41 5 30 C7 21 10 13 13 9 C15 17 16 27 14 37 C12 46 14 53 11 56Z" fill="#F97316" opacity="0.88"/>
+      <path d="M24 61 C14 57 11 44 13 30 C15 18 20 7 24 3 C28 7 33 18 35 30 C37 44 34 57 24 61Z" fill="url(#fl-title)"/>
+      <path d="M37 56 C34 53 36 46 34 37 C32 27 33 17 35 9 C38 13 41 21 43 30 C46 41 44 52 37 56Z" fill="#c9f000" opacity="0.82"/>
+    </svg>
+  </div>
+
+  <h1>АНО «Прометей Консалтинг»</h1>
+
+  <div style="display:flex;align-items:center;gap:18px;justify-content:center;margin:10px 0 14px">
+    <div style="height:1px;width:56px;background:linear-gradient(to right,transparent,var(--gold))"></div>
+    <div class="diamond"></div>
+    <div style="height:1px;width:56px;background:linear-gradient(to left,transparent,var(--gold))"></div>
+  </div>
+
+  <div class="title-project">Центр Социальных Консультаций</div>
+  <div class="subtitle">Проект ЦСК · Заявка в Фонд президентских грантов</div>
+
+  <hr class="hr-gold" style="width:300px;margin:20px auto">
+
+  <div class="mission-block">
+    <div class="mission-label">Миссия организации</div>
+    <div class="mission-text">
+      Повышение качества жизни уязвимых групп населения<br>
+      через развитие их <strong>самостоятельности, активности</strong><br>
+      и вовлечённости в жизнь общества
+    </div>
+  </div>
+
+  <div class="meta">
+    Санкт-Петербург <strong style="margin:0 8px">·</strong> 2026
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 2 — ПРОБЛЕМА И АКТУАЛЬНОСТЬ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="cb">
+    <div class="slide-label">Актуальность и проблематика</div>
+
+    <div class="g-offset" style="align-items:center">
+      <div>
+        <div style="font-family:var(--font-d);font-size:clamp(20px,2.8vw,32px);color:var(--white);line-height:1.45;margin-bottom:24px">
+          Традиционная социальная помощь<br>решает проблему сегодня —<br>
+          и <strong style="color:var(--gold)">воспроизводит её завтра.</strong>
+        </div>
+        <div style="font-family:var(--font-d);font-size:clamp(22px,3vw,38px);color:var(--white);font-style:italic;line-height:1.3;margin-top:8px">
+          Как разорвать этот круг?
+        </div>
+      </div>
+
+      <div>
+        <h2 class="st" style="margin-bottom:20px">Где сломана<br><strong>система?</strong></h2>
+        <hr class="hr-left" style="width:70px;margin-bottom:20px">
+        <ul class="el">
+          <li><strong>Пассивная помощь</strong> — проблему решают вместо клиента, не с ним</li>
+          <li><strong>Разовый эффект</strong> — нет устойчивого, долгосрочного результата</li>
+          <li><strong>Нет комплексности</strong> — психологические, правовые и социальные задачи решаются раздельно</li>
+          <li><strong>Стигматизация</strong> — человек не становится активным участником своей жизни</li>
+          <li><strong>Дефицит охвата</strong> — особо уязвимые группы (ветераны СВО, семьи погибших) остаются без системной поддержки</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 3 — НАШ ОТВЕТ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="cb">
+    <div class="slide-label">Наш подход</div>
+    <h2 class="st">Активизация, а не<br><strong>пассивная опека</strong></h2>
+    <hr class="hr-left" style="width:80px;margin:14px 0 24px">
+
+    <div class="comparison">
+      <div class="comp-col old">
+        <div class="comp-label">Традиционный подход</div>
+        <ul class="comp-list">
+          <li>Помогают <em>вместо</em> клиента</li>
+          <li>Разовая консультация без сопровождения</li>
+          <li>Клиент — пассивный получатель услуги</li>
+          <li>Стандартизированные программы</li>
+          <li>Формируется зависимость от помощи</li>
+        </ul>
+      </div>
+      <div class="comp-col new">
+        <div class="comp-label">Подход ЦСК — Активизация</div>
+        <ul class="comp-list">
+          <li>Даём <strong>инструменты</strong> — клиент решает сам</li>
+          <li><strong>Системное сопровождение</strong> на всём пути</li>
+          <li>Клиент — <strong>активный участник</strong> процесса</li>
+          <li><strong>Индивидуальный план</strong> активизации</li>
+          <li>Устойчивая <strong>самостоятельность</strong> как результат</li>
+        </ul>
+      </div>
+    </div>
+
+    <blockquote class="pull" style="margin-top:22px">
+      «Мы решаем проблемы, но не за вас — помогаем научиться решать их самостоятельно.»
+    </blockquote>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 4 — ЦЕЛЕВЫЕ ГРУППЫ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="cb">
+    <div class="slide-label">Целевые группы</div>
+    <h2 class="st">Кому мы помогаем</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:22px">
+
+    <div class="g4">
+      <div class="card">
+        <div class="card-label">Группа I</div>
+        <div class="card-title">Ветераны и семьи</div>
+        <div class="card-body">
+          Ветераны боевых действий, семьи погибших и без вести пропавших
+          в ходе СВО — реабилитация и сопровождение
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Группа II</div>
+        <div class="card-title">Пожилые и люди с инвалидностью</div>
+        <div class="card-body">
+          Поддержка самостоятельности, социальная адаптация,
+          правовое просвещение и защита прав
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Группа III</div>
+        <div class="card-title">Семьи в трудной ситуации</div>
+        <div class="card-body">
+          Одинокие отцы и матери, семьи в кризисных
+          жизненных обстоятельствах, вопросы обучения и трудоустройства
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Группа IV</div>
+        <div class="card-title">Молодёжь из групп риска</div>
+        <div class="card-body">
+          Профилактика девиантного поведения, профориентация,
+          самореализация и развитие гражданской активности
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:13px 20px;background:var(--card-bg);border-left:3px solid var(--gold);">
+      <span style="font-size:12px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-right:10px">Терапевтические мишени ЦСК</span>
+      <span style="font-size:13px;color:var(--grey)">неустроенность · алкоголизм · наркомания · семейные конфликты · жилищные проблемы · трудоустройство · самореализация</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 5 — МЕТОДОЛОГИЯ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="cb">
+    <div class="slide-label">Методология</div>
+    <h2 class="st">Комплекс услуг ЦСК</h2>
+    <div style="font-size:14px;color:var(--grey);margin:8px 0 18px">
+      Научная и методическая поддержка:
+      <strong style="color:var(--white)">СПбГУ</strong>
+      — социальная клиника, медиаторы, психологи, студенты-практиканты
+    </div>
+
+    <div class="service-grid">
+      <div class="service-item">Психодиагностика</div>
+      <div class="service-item">Развитие личности</div>
+      <div class="service-item">Психокоррекция</div>
+      <div class="service-item">Профориентация</div>
+      <div class="service-item">Семейная психотерапия</div>
+      <div class="service-item">Юридическое и правовое просвещение</div>
+      <div class="service-item">Тренинги, семинары, лекции</div>
+      <div class="service-item">Медиация</div>
+      <div class="service-item">Бытовая конфликтология</div>
+      <div class="service-item">Профилактика девиаций</div>
+      <div class="service-item">Работа с общественными объединениями</div>
+      <div class="service-item">Социальное проектирование</div>
+      <div class="service-item">Взаимодействие с органами власти</div>
+    </div>
+
+    <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap">
+      <div style="padding:10px 16px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold)">◆</span><strong style="color:var(--white)">Телефон доверия</strong> · служба немедленного реагирования
+      </div>
+      <div style="padding:10px 16px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold)">◆</span><strong style="color:var(--white)">Онлайн-платформа</strong> · доступ к услугам 24/7
+      </div>
+      <div style="padding:10px 16px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold)">◆</span><strong style="color:var(--white)">Группы поддержки</strong> · отдельное помещение, куратор
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 6 — ОРГАНИЗАЦИОННАЯ СТРУКТУРА
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="cb">
+    <div class="slide-label">Организация</div>
+    <h2 class="st">Структура управления</h2>
+    <div style="font-size:14px;color:var(--grey);margin-bottom:26px">
+      Минимальная структура без дублирования — каждый элемент решает конкретную задачу
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+
+      <!-- Директор -->
+      <div style="background:rgba(200,169,81,0.1);border:1px solid var(--gold);
+                  padding:12px 52px;font-family:var(--font-d);font-size:18px;
+                  color:var(--gold-light);text-align:center;letter-spacing:0.04em">
+        Директор
+      </div>
+      <div style="width:1px;height:20px;background:var(--gold-dim)"></div>
+
+      <!-- Руководитель программ -->
+      <div style="background:var(--card-bg);border:1px solid var(--card-border);
+                  padding:10px 40px;font-size:16px;color:var(--white);text-align:center">
+        Руководитель программ
+      </div>
+      <div style="width:1px;height:20px;background:var(--gold-dim)"></div>
+
+      <!-- Горизонталь -->
+      <div style="position:relative;display:flex;gap:14px">
+        <div style="position:absolute;top:0;left:60px;right:60px;height:1px;
+                    background:var(--gold-dim);transform:translateY(-1px)"></div>
+
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="width:1px;height:20px;background:var(--gold-dim)"></div>
+          <div style="background:var(--card-bg);border:1px solid var(--card-border);
+                      padding:10px 16px;font-size:13px;color:var(--grey);text-align:center">
+            Специалисты по работе<br>с клиентами (×2–3)
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="width:1px;height:20px;background:var(--gold-dim)"></div>
+          <div style="background:var(--card-bg);border:1px solid var(--card-border);
+                      padding:10px 16px;font-size:13px;color:var(--grey);text-align:center">
+            Координатор<br>волонтёров
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="width:1px;height:20px;background:var(--gold-dim)"></div>
+          <div style="background:var(--card-bg);border:1px solid var(--card-border);
+                      padding:10px 16px;font-size:13px;color:var(--grey);text-align:center">
+            SMM-специалист
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Аутсорсинг -->
+    <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <div style="padding:8px 18px;border:1px dashed rgba(200,169,81,0.28);
+                  font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold);opacity:.6">◇</span> Бухгалтерия — аутсорсинг
+      </div>
+      <div style="padding:8px 18px;border:1px dashed rgba(200,169,81,0.28);
+                  font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold);opacity:.6">◇</span> Юридическое сопровождение — аутсорсинг
+      </div>
+      <div style="padding:8px 18px;border:1px dashed rgba(200,169,81,0.28);
+                  font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold);opacity:.6">◇</span> IT-поддержка — аутсорсинг
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 7 — АКТИВИЗАЦИЯ СОТРУДНИКОВ (ЭМПАУЭРМЕНТ)
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="cb">
+    <div class="slide-label">Управление персоналом</div>
+    <h2 class="st">Активизация сотрудников<br><strong>Эмпауэрмент</strong></h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:14px">
+
+    <div class="method-grid">
+      <div class="method-item">
+        <div class="method-num">01</div>
+        <div>
+          <div class="method-name">Делегирование полномочий</div>
+          <div class="method-result">Самостоятельность и ответственность каждого сотрудника</div>
+        </div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">02</div>
+        <div>
+          <div class="method-name">Участие в принятии решений</div>
+          <div class="method-result">Чувство причастности, рост инициативности</div>
+        </div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">03</div>
+        <div>
+          <div class="method-name">Наставничество и коучинг</div>
+          <div class="method-result">Быстрая адаптация, профессиональный рост</div>
+        </div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">04</div>
+        <div>
+          <div class="method-name">Система внутреннего обучения</div>
+          <div class="method-result">Новые навыки, повышение лояльности</div>
+        </div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">05</div>
+        <div>
+          <div class="method-name">Конкурсы идей и проектных групп</div>
+          <div class="method-result">Стимулирование креативности, выявление лидеров</div>
+        </div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">06</div>
+        <div>
+          <div class="method-name">Гибкость в организации труда</div>
+          <div class="method-result">Снижение выгорания, баланс работа–жизнь</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:12px 18px;background:var(--card-bg);
+                border-left:3px solid var(--gold);font-size:14px;color:var(--grey)">
+      <strong style="color:var(--white)">KPI команды:</strong>
+      реализованные инициативы сотрудников
+      <span style="color:var(--gold-dim);margin:0 8px">·</span>
+      удовлетворённость клиентов
+      <span style="color:var(--gold-dim);margin:0 8px">·</span>
+      пройденные курсы самообучения
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 8 — АКТИВИЗАЦИЯ КЛИЕНТОВ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="cb">
+    <div class="slide-label">Работа с клиентами</div>
+    <h2 class="st">Активизация клиентов</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:20px">
+
+    <div class="g2" style="align-items:start">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:13px">Методы работы</div>
+        <ul class="el">
+          <li>Вовлечение клиента в разработку <strong>индивидуального плана</strong></li>
+          <li><strong>Группы поддержки</strong> — отдельное помещение, сотрудник-куратор</li>
+          <li>Обучение <strong>навыкам самообслуживания</strong></li>
+          <li>Подробный <strong>социальный мониторинг</strong> территорий</li>
+          <li>Служба <strong>немедленного реагирования</strong></li>
+          <li>Работа с <strong>муниципальными советами</strong></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:13px">Форма оплаты — индивидуально</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="padding:13px 16px;background:var(--card-bg);border:1px solid var(--card-border)">
+            <div style="font-size:14px;color:var(--white);margin-bottom:4px">Частичная или полная оплата</div>
+            <div style="font-size:12px;color:var(--grey)">исходя из статуса и возможностей клиента</div>
+          </div>
+          <div style="padding:13px 16px;background:var(--card-bg);border:1px solid var(--card-border)">
+            <div style="font-size:14px;color:var(--white);margin-bottom:4px">«Отработка»</div>
+            <div style="font-size:12px;color:var(--grey)">участие в общественных поручениях и делах организации</div>
+          </div>
+          <div style="padding:13px 16px;background:var(--card-bg);border:1px solid var(--card-border)">
+            <div style="font-size:14px;color:var(--white);margin-bottom:4px">Волонтёрство</div>
+            <div style="font-size:12px;color:var(--grey)">вовлечение в деятельность ЦСК как путь к активизации</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 9 — ФИНАНСИРОВАНИЕ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="cb">
+    <div class="slide-label">Финансовая модель</div>
+    <h2 class="st">Финансирование<br>и фандрайзинг</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:20px">
+
+    <div class="g2" style="align-items:start">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Источники финансирования</div>
+        <div class="funding-items">
+          <div class="funding-item">
+            <div class="funding-label">
+              <span class="funding-name">Президентские гранты</span>
+              <span class="funding-tag">Приоритет</span>
+            </div>
+            <div class="funding-bar"><div class="funding-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="funding-item">
+            <div class="funding-label">
+              <span class="funding-name">Государственные субсидии</span>
+              <span class="funding-tag">Стабильно</span>
+            </div>
+            <div class="funding-bar"><div class="funding-bar-fill" style="width:65%"></div></div>
+          </div>
+          <div class="funding-item">
+            <div class="funding-label">
+              <span class="funding-name">Частные пожертвования</span>
+            </div>
+            <div class="funding-bar"><div class="funding-bar-fill" style="width:40%"></div></div>
+          </div>
+          <div class="funding-item">
+            <div class="funding-label">
+              <span class="funding-name">Коммерческие услуги</span>
+            </div>
+            <div class="funding-bar"><div class="funding-bar-fill" style="width:28%"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--grey)">
+          Коммерческие услуги: тренинги для бизнеса по инклюзии и управлению разнообразием
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:13px">Стратегия устойчивости</div>
+        <ul class="el">
+          <li><strong>Диверсификация</strong> — несколько независимых источников снижают риск</li>
+          <li><strong>Резервный фонд</strong> — защита от кассовых разрывов</li>
+          <li><strong>Специалист по грантам</strong> — выделяется при нескольких активных грантах</li>
+          <li><strong>Работа с муниципалитетами</strong> — доступ к городским субсидиям СПб</li>
+        </ul>
+
+        <div style="margin-top:16px;padding:13px 16px;background:rgba(200,169,81,0.06);
+                    border:1px solid var(--gold-dim);font-size:13px;color:var(--grey)">
+          Фонд президентских грантов:
+          приоритет — <strong style="color:var(--white)">поддержка уязвимых групп</strong>
+          и развитие социальных инноваций
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 10 — PR · GR · БРЕНД
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="cb">
+    <div class="slide-label">Коммуникации и позиционирование</div>
+    <h2 class="st">PR · GR · Бренд-менеджмент</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:20px">
+
+    <div class="g2" style="align-items:start;gap:32px">
+      <div>
+        <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">PR — Связи с общественностью</div>
+        <ul class="el" style="margin-bottom:18px">
+          <li>СМИ: <strong>Фонтанка, Бумага, Мой Район</strong>, радио и ТВ</li>
+          <li>Сторителлинг — истории успеха клиентов (с согласия)</li>
+          <li>Открытые дни, партнёрские мероприятия</li>
+        </ul>
+
+        <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">GR — Взаимодействие с властью</div>
+        <ul class="el">
+          <li>Комитет по социальной политике Санкт-Петербурга</li>
+          <li>Районные администрации, ОСЗН, профильные комитеты</li>
+          <li>Рабочие группы и общественные советы при органах власти</li>
+          <li>Программы поддержки социально ориентированных НКО</li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Позиционирование и УТП</div>
+
+        <div style="background:rgba(200,169,81,0.05);border:1px solid var(--gold-dim);
+                    padding:18px 20px;margin-bottom:16px">
+          <div style="font-size:12px;color:var(--grey);margin-bottom:7px">Уникальное торговое предложение</div>
+          <div style="font-family:var(--font-d);font-size:18px;color:var(--white);line-height:1.4">
+            НКО как платформа для развития<br>самостоятельности
+          </div>
+        </div>
+
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);margin-bottom:10px">Ценности организации</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="chip">Доверие</span>
+          <span class="chip">Партнёрство</span>
+          <span class="chip">Развитие</span>
+          <span class="chip">Открытость</span>
+        </div>
+
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);margin-bottom:8px">Работа с негативом</div>
+        <div style="font-size:13px;color:var(--grey);line-height:1.6">
+          Мониторинг упоминаний · ответ в течение
+          <strong style="color:var(--white)">1–2 часов</strong> ·
+          превентивный позитивный контент
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 11 — ПАРТНЁРСКАЯ ЭКОСИСТЕМА
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="cb">
+    <div class="slide-label">Экосистема партнёрств</div>
+    <h2 class="st">Партнёры и взаимодействие</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:14px">
+
+    <table class="pt">
+      <thead>
+        <tr>
+          <th>Категория</th>
+          <th>Организации</th>
+          <th>Формат взаимодействия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Государственные<br><span style="font-size:11px;color:rgba(200,169,81,0.45)">и бюджетные</span></td>
+          <td>КЦСОН, районные администрации, ОСЗН;<br>Общественная палата СПб;<br>Комитет семей воинов Отечества</td>
+          <td>Совместные проекты · субсидии · обмен клиентами</td>
+        </tr>
+        <tr>
+          <td>Образовательные</td>
+          <td>СПбГУ, ГИПИСР, РГПУ им. Герцена;<br>ПСПбГМУ (Первый Мед);<br>Российское общество знания;<br>Центр профориентации «Вектор»</td>
+          <td>Практика студентов · совместные исследования · методическая поддержка</td>
+        </tr>
+        <tr>
+          <td>Медицинские</td>
+          <td>Военно-медицинская академия;<br>Госпиталь ветеранов войн</td>
+          <td>Реабилитация · совместное ведение случаев · консультации</td>
+        </tr>
+        <tr>
+          <td>Общественные<br><span style="font-size:11px;color:rgba(200,169,81,0.45)">организации</span></td>
+          <td>Фонд «Защитники Отечества»;<br>«Общее дело»; «Отцы России»</td>
+          <td>Совместные программы · обмен целевыми группами</td>
+        </tr>
+        <tr>
+          <td>Бизнес</td>
+          <td>Банки, IT-компании, малый бизнес</td>
+          <td>Корпоративное волонтёрство · <strong style="color:var(--gold)">интеллектуальное волонтёрство</strong> · спонсорство</td>
+        </tr>
+        <tr>
+          <td>Медиа</td>
+          <td>«Фонтанка», «Бумага», «Мой район»,<br>городские блогеры</td>
+          <td>Информационная поддержка · сторителлинг · спецпроекты</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:16px;padding:11px 18px;background:var(--card-bg);
+                border-left:3px solid var(--gold);font-size:13px;color:var(--grey)">
+      <strong style="color:var(--white)">Механизмы взаимодействия:</strong>
+      совместные проекты · соглашения о сотрудничестве · обмен клиентами и экспертизой
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 12 — УПРАВЛЕНИЕ РИСКАМИ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s12">
+  <div class="cb">
+    <div class="slide-label">Управление рисками</div>
+    <h2 class="st">Риски и меры профилактики</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:18px">
+
+    <div class="risk-grid">
+      <div class="risk-item">
+        <div class="risk-type">Финансовый</div>
+        <div class="risk-name">Нестабильность финансирования</div>
+        <div class="risk-solution">Диверсификация источников, резервный фонд, развитие коммерческих услуг</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-type">Кадровый</div>
+        <div class="risk-name">Выгорание и текучесть</div>
+        <div class="risk-solution">Система эмпауэрмента, профилактика выгорания, конкурентная оплата труда</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-type">Организационный</div>
+        <div class="risk-name">Операционные сбои</div>
+        <div class="risk-solution">Долгосрочная аренда, облачный документооборот, IT-поддержка на аутсорсе</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-type">Информационный</div>
+        <div class="risk-name">Утечка данных клиентов</div>
+        <div class="risk-solution">Политика ИБ, шифрование данных, разграничение доступа, ежегодный аудит</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-type">Репутационный</div>
+        <div class="risk-name">Негатив в социальных сетях</div>
+        <div class="risk-solution">Мониторинг упоминаний, ответ в течение 1–2 ч, превентивный контент</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-type">Клиентский</div>
+        <div class="risk-name">Несоответствие ожиданиям</div>
+        <div class="risk-solution">Предварительное информирование о принципах активизации, индивидуальный подход</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 12b — ИНФОРМАЦИОННЫЕ РИСКИ
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s12b">
+  <div class="cb">
+    <div class="slide-label">Информационная безопасность</div>
+    <h2 class="st">Информационные риски</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:16px">
+
+    <div class="info-risk-grid">
+      <div class="ir-item">
+        <div class="ir-type">Конфиденциальность</div>
+        <div class="ir-name">Утечка персональных данных</div>
+        <div class="ir-fix">Шифрование хранилищ · разграничение прав доступа · защищённые каналы связи · инструктаж цифровой гигиены</div>
+      </div>
+      <div class="ir-item">
+        <div class="ir-type">Киберугрозы</div>
+        <div class="ir-name">Кибератаки и взломы</div>
+        <div class="ir-fix">Лицензионный антивирус + файрвол · своевременные обновления ПО · регулярные резервные копии</div>
+      </div>
+      <div class="ir-item">
+        <div class="ir-type">Человеческий фактор</div>
+        <div class="ir-name">Ошибки сотрудников</div>
+        <div class="ir-fix">Регламенты работы с информацией · двухфакторная аутентификация · обучение основам ИБ</div>
+      </div>
+      <div class="ir-item">
+        <div class="ir-type">Инфраструктура</div>
+        <div class="ir-name">Потеря / порча оборудования</div>
+        <div class="ir-fix">Регулярное резервное копирование · часть копий в облаке или удалённом физическом хранилище</div>
+      </div>
+      <div class="ir-item">
+        <div class="ir-type">Аутсорсинг</div>
+        <div class="ir-name">Риски подрядчиков (IT, бухгалтерия)</div>
+        <div class="ir-fix">Договор с пунктом о конфиденциальности · выбор подрядчиков с сертифицированными системами защиты</div>
+      </div>
+      <div class="ir-item" style="background:rgba(107,63,160,0.06);border-color:rgba(107,63,160,0.35);display:flex;flex-direction:column;justify-content:center">
+        <div class="ir-type">Ключевое</div>
+        <div class="ir-name" style="font-size:13px;line-height:1.5;color:var(--purple-light)">Для НКО, работающей с уязвимыми группами — информационные риски особенно критичны</div>
+      </div>
+    </div>
+
+    <div class="ir-reco">
+      <div class="ir-reco-item">
+        <div class="ir-reco-num">01</div>
+        <div class="ir-reco-text">Разработать и утвердить «Политику информационной безопасности»</div>
+      </div>
+      <div class="ir-reco-item">
+        <div class="ir-reco-num">02</div>
+        <div class="ir-reco-text">Назначить ответственного за ИБ (даже на полставки)</div>
+      </div>
+      <div class="ir-reco-item">
+        <div class="ir-reco-num">03</div>
+        <div class="ir-reco-text">Аудит информационной безопасности — не реже 1 раза в год</div>
+      </div>
+      <div class="ir-reco-item">
+        <div class="ir-reco-num">04</div>
+        <div class="ir-reco-text">Иметь план действий на случай инцидента — кто и что делает</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 13 — ДОРОЖНАЯ КАРТА
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s13">
+  <div class="cb">
+    <div class="slide-label">Стратегия развития</div>
+    <h2 class="st">Дорожная карта — <strong>3 года</strong></h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:30px">
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">I</div>
+        <div class="timeline-title">Запуск<br><span style="font-size:13px;color:var(--grey)">6–12 месяцев</span></div>
+        <ul class="timeline-items">
+          <li>Государственная регистрация АНО</li>
+          <li>Формирование команды ЦСК</li>
+          <li>Первые клиенты и консультации</li>
+          <li>Получение первых грантов</li>
+          <li>Запуск партнёрства с СПбГУ</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">II</div>
+        <div class="timeline-title">Расширение<br><span style="font-size:13px;color:var(--grey)">12–24 месяца</span></div>
+        <ul class="timeline-items">
+          <li>Рост самостоятельности клиентов</li>
+          <li>Охват новых целевых групп</li>
+          <li>Расширение партнёрской сети</li>
+          <li>Запуск онлайн-платформы</li>
+          <li>Коммерческие тренинги для бизнеса</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">III</div>
+        <div class="timeline-title">Стабилизация<br><span style="font-size:13px;color:var(--grey)">24–36 месяцев</span></div>
+        <ul class="timeline-items">
+          <li>Устойчивое финансирование</li>
+          <li>Масштабирование модели</li>
+          <li>Репликация в других районах</li>
+          <li>Региональное признание</li>
+          <li>Долгосрочные стратегические альянсы</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 13b — СТРАТЕГИЯ ПРОДВИЖЕНИЯ / PR / GR
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s13b">
+  <div class="cb">
+    <div class="slide-label">Бренд · PR · GR · Репутация</div>
+    <h2 class="st">Стратегия продвижения</h2>
+    <hr class="hr-left" style="width:70px;margin-bottom:16px">
+
+    <div class="promo-grid">
+
+      <div class="promo-item">
+        <div class="promo-tag">Бренд-менеджмент</div>
+        <div class="promo-title">Позиционирование и визуальный стиль</div>
+        <ul class="promo-list">
+          <li>УТП: «НКО как платформа для развития самостоятельности»</li>
+          <li>Принципы: эмпауэрмент + активизация</li>
+          <li>Ценности: доверие · партнёрство · развитие · открытость</li>
+          <li>Единый визуальный стиль: сайт, соцсети, печать</li>
+        </ul>
+        <div>
+          <span class="promo-kw">эмпауэрмент</span>
+          <span class="promo-kw">системный подход</span>
+          <span class="promo-kw">устойчивый результат</span>
+        </div>
+      </div>
+
+      <div class="promo-item">
+        <div class="promo-tag">PR — Связи с общественностью</div>
+        <div class="promo-title">Формирование имиджа и охват</div>
+        <ul class="promo-list">
+          <li>СМИ: «Фонтанка», «Бумага», «Мой район», радио, ТВ</li>
+          <li>Сторителлинг: истории успеха клиентов, кейсы активизации</li>
+          <li>Мероприятия: открытые дни, семинары для партнёров</li>
+          <li>Ключевое сообщение: «Мы помогаем решать — не решаем за вас»</li>
+        </ul>
+        <div>
+          <span class="promo-kw">Фонтанка</span>
+          <span class="promo-kw">сторителлинг</span>
+          <span class="promo-kw">открытые дни</span>
+        </div>
+      </div>
+
+      <div class="promo-item purple-accent">
+        <div class="promo-tag">GR — Взаимодействие с властью</div>
+        <div class="promo-title">Государственная поддержка и субсидии</div>
+        <ul class="promo-list">
+          <li>Целевые: Комитет соцполитики СПб, районные администрации, ОСЗН</li>
+          <li>Участие в гос. программах поддержки СО НКО</li>
+          <li>Соглашения с муниципалитетами, рабочие группы</li>
+          <li>Получение субсидий на социальные проекты</li>
+        </ul>
+        <div>
+          <span class="promo-kw">субсидии</span>
+          <span class="promo-kw">муниципалитеты</span>
+          <span class="promo-kw">СО НКО</span>
+        </div>
+      </div>
+
+      <div class="promo-item purple-accent">
+        <div class="promo-tag">Репутация в digital-среде</div>
+        <div class="promo-title">Мониторинг и работа с негативом</div>
+        <ul class="promo-list">
+          <li>Мониторинг упоминаний НКО в соцсетях и СМИ</li>
+          <li>Ответ на негатив — в течение <strong style="color:var(--white)">1–2 часов</strong></li>
+          <li>Эмпатия → конструктив → перевод в личные сообщения</li>
+          <li>Профилактика: регулярный позитивный контент (отзывы, фотоотчёты)</li>
+        </ul>
+        <div>
+          <span class="promo-kw">мониторинг</span>
+          <span class="promo-kw">1–2 часа</span>
+          <span class="promo-kw">превентивный контент</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 14 — КОНКУРЕНТНОЕ ПРЕИМУЩЕСТВО
+═══════════════════════════════════════════════════ -->
+<section class="slide" id="s14">
+  <div class="cb">
+    <div class="slide-label">Конкурентное преимущество</div>
+    <h2 class="st" style="margin-bottom:4px">Почему ЦСК</h2>
+    <hr class="hr-left" style="width:60px;margin-bottom:14px">
+
+    <blockquote class="pull">
+      Системный подход + активизация потенциала сотрудников <em>и</em> клиентов
+      = <strong style="font-style:normal">локальный синергетический эффект</strong>
+    </blockquote>
+
+    <div class="vs-row">
+      <div class="vs-item">
+        <div class="vs-item-label">Крупные федеральные фонды</div>
+        <div class="vs-item-name">«Старость в радость», «Перспективы»</div>
+        <div style="font-size:12px;color:var(--grey);line-height:1.45;margin-bottom:6px">
+          Сила: узнаваемый бренд, крупные бюджеты
+        </div>
+        <div class="vs-item-weak">Ограничение: менее гибкие, стандартизированный подход, не работают с локальной спецификой</div>
+      </div>
+      <div class="vs-item">
+        <div class="vs-item-label">Ресурсные центры для НКО</div>
+        <div class="vs-item-name">Экспертная поддержка организаций</div>
+        <div style="font-size:12px;color:var(--grey);line-height:1.45;margin-bottom:6px">
+          Сила: глубокая экспертиза
+        </div>
+        <div class="vs-item-weak">Ограничение: не работают напрямую с конечными клиентами — населением</div>
+      </div>
+      <div class="vs-item us">
+        <div class="vs-item-label">ЦСК · АНО «Прометей»</div>
+        <div class="vs-item-name">Наш системный подход</div>
+        <div class="vs-item-weak">
+          Эмпауэрмент сотрудников + активизация клиентов ·
+          Прямая работа с населением ·
+          Наука + практика (СПбГУ) ·
+          Гибкость и локальная укоренённость
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     СЛАЙД 15 — ИТОГОВЫЙ
+═══════════════════════════════════════════════════ -->
+<section class="slide closing" id="s15">
+  <div class="td l"><div class="td-dot"></div><div class="td-line"></div><div class="td-dot"></div></div>
+  <div class="td r"><div class="td-dot"></div><div class="td-line"></div><div class="td-dot"></div></div>
+
+  <div style="font-size:12px;letter-spacing:0.34em;text-transform:uppercase;color:var(--gold)">АНО «Прометей Консалтинг»</div>
+
+  <hr class="hr-gold" style="width:180px;margin:18px auto">
+
+  <div class="big-q">
+    «Помогаем людям стать самостоятельными —<br>
+    это и есть настоящая социальная работа»
+  </div>
+
+  <hr class="hr-gold" style="width:180px;margin:18px auto">
+
+  <div class="partner-badge">
+    <span style="color:var(--gold)">◆</span>
+    Научный и методический партнёр:
+    <strong style="color:var(--white)">СПбГУ</strong>
+    — социальная клиника, медиаторы, психологи, практиканты
+  </div>
+
+  <div style="margin-top:28px;font-size:13px;color:rgba(141,164,188,0.55);letter-spacing:0.06em">
+    Центр Социальных Консультаций · Санкт-Петербург · 2026
+  </div>
+</section>
+
+</div><!-- /presentation -->
+
+
+<!-- ── NAVIGATION ──────────────────────────────────── -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="go(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    Назад
+  </button>
+
+  <div class="slide-counter">
+    <span class="cur" id="cur">1</span>
+    <span style="margin:0 6px;opacity:.35">/</span>
+    <span id="tot">17</span>
+  </div>
+
+  <button class="nav-btn" id="nextBtn" onclick="go(1)">
+    Вперёд
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
+</div>
+
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+
+document.getElementById('tot').textContent = N;
+
+function refresh() {
+  const pct = ((cur + 1) / N) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('cur').textContent = cur + 1;
+  document.getElementById('prevBtn').style.opacity = cur === 0 ? '0.28' : '1';
+  document.getElementById('nextBtn').style.opacity = cur === N - 1 ? '0.28' : '1';
+}
+
+function go(dir) {
+  const nx = cur + dir;
+  if (nx < 0 || nx >= N) return;
+  slides[cur].classList.remove('active');
+  cur = nx;
+  slides[cur].classList.add('active');
+  refresh();
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= N) return;
+  slides[cur].classList.remove('active');
+  cur = idx;
+  slides[cur].classList.add('active');
+  refresh();
+}
+
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(1); }
+  else if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+  else if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  else if (e.key === 'End')  { e.preventDefault(); goTo(N-1); }
+});
+
+// touch / swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = tx - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 50) go(dx > 0 ? 1 : -1);
+});
+
+refresh();
+</script>
+
+</body>
+</html>
